@@ -3,6 +3,7 @@ import math
 import time
 from page import Page
 from bucket import Bucket
+import hashlib
 
 class HashIndex:
     def __init__(self, page_size: int, bucket_factor: int):
@@ -21,7 +22,7 @@ class HashIndex:
     # Função Hash (modular)
     # ==========================
     def hash_function(self, key: str) -> int:
-        return hash(key) % self.NB
+        return int(hashlib.md5(key.encode()).hexdigest(), 16) % self.NB
 
     # ==========================
     # Carregar arquivo e dividir em páginas

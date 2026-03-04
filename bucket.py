@@ -10,9 +10,13 @@ class Bucket:
             self.entries.append((key, page_id))
             return False  # não houve overflow
         else:
+            # Overflow ocorreu aqui
             if self.overflow is None:
                 self.overflow = Bucket(self.bucket_id, self.capacity)
-            return self.overflow.insert(key, page_id)
+                self.overflow.entries.append((key, page_id))
+                return True  # novo overflow criado
+            else:
+                return self.overflow.insert(key, page_id)
         
     def search(self, key: str):
         current = self
